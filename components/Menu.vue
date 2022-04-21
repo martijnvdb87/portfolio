@@ -7,6 +7,9 @@
       <li>
         <NuxtLink to="/about">About</NuxtLink>
       </li>
+      <li>
+        <NuxtLink to="/blog/first-post">Blogs / First post</NuxtLink>
+      </li>
     </ol>
     <hr>
   </div>
