@@ -1,8 +1,10 @@
 <script>
 import MainMenu from '~/components/MainMenu.vue'
+import App from '~/components/App.vue'
 
 export default {
   components: {
+    App,
     MainMenu,
   },
   async asyncData({ $content, params }) {
@@ -24,7 +26,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <App>
     <MainMenu />
     <article>
       <nuxt-content :document="post" />
@@ -36,5 +38,5 @@ export default {
         next.title
       }}</NuxtLink>
     </article>
-  </div>
+  </App>
 </template>
