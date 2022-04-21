@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Menu />
+    <MainMenu />
     Home
   </div>
 </template>
