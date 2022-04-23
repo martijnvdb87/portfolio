@@ -1,5 +1,11 @@
 <template>
-  <a :href="data.url" :class="data.class" target="_blank">
+  <a
+    :href="data.url"
+    :class="data.class"
+    target="_blank"
+    rel="noreferrer noopener"
+  >
+    <span class="visually-hidden">{{ data.description }}</span>
     <svg
       v-if="type == 'github'"
       xmlns="http://www.w3.org/2000/svg"
@@ -113,42 +119,48 @@ export default Vue.extend({
     },
   },
   computed: {
-    data: () => {
+    data() {
       switch (this.type) {
         case 'github':
           return {
             class: `icon-${this.type}`,
             url: 'https://github.com/martijnvdb87',
+            description: 'Visit my Github page (opens in new tab)',
           }
 
         case 'codepen':
           return {
             class: `icon-${this.type}`,
             url: 'https://codepen.io/Martijnvdb87',
+            description: 'Visit my Codepen page (opens in new tab)',
           }
 
         case 'linkedin':
           return {
             class: `icon-${this.type}`,
             url: 'https://www.linkedin.com/in/martijn-van-den-bosch-8a6574190/',
+            description: 'Visit my LinkedIn page (opens in new tab)',
           }
 
         case 'instagram':
           return {
             class: `icon-${this.type}`,
             url: 'https://www.instagram.com/martijnvdb87/',
+            description: 'Visit my Instagram page (opens in new tab)',
           }
 
         case 'email':
           return {
             class: `icon-${this.type}`,
             url: 'mailto:martijnvdb87@gmail.com',
+            description: 'Send me an email',
           }
 
         default:
           return {
-            class: 'icon',
+            class: '',
             url: '',
+            description: '',
           }
       }
     },
@@ -185,5 +197,28 @@ svg {
 
 .icon-email {
   @apply bg-yellow-500;
+}
+
+.visually-hidden {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(
+    1px 1px 1px 1px
+  ); /* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
+  clip: rect(
+    1px,
+    1px,
+    1px,
+    1px
+  ); /*maybe deprecated but we need to support legacy browsers */
+  clip-path: inset(
+    50%
+  ); /*modern browsers, clip-path works inwards from each corner*/
+  white-space: nowrap; /* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
 }
 </style>
