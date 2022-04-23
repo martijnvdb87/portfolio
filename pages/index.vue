@@ -5,20 +5,18 @@
       <p>Full Stack Developer</p>
       <Socials />
     </header>
-
   </App>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import App from '~/components/App.vue';
-import Icon from '~/components/Icon.vue';
-import Socials from '~/components/Socials.vue';
+import Vue from 'vue'
+import App from '~/components/App.vue'
+import Socials from '~/components/Socials.vue'
 
 export default Vue.extend({
   name: 'IndexPage',
-  components: { App, Icon, Socials },
-});
+  components: { App, Socials },
+})
 </script>
 
 <style scoped>
