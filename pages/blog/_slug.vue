@@ -31,10 +31,10 @@ export default {
     <article>
       <nuxt-content :document="post" />
       <hr />
-      <NuxtLink v-if="previous" :to="'/blog/' + previous.slug">{{
+      <NuxtLink v-if="previous" :to="'/blog/' + previous.slug + '/'">{{
         previous.title
       }}</NuxtLink>
-      <NuxtLink v-if="next" :to="'/blog/' + next.slug">{{
+      <NuxtLink v-if="next" :to="'/blog/' + next.slug + '/'">{{
         next.title
       }}</NuxtLink>
     </article>
