@@ -11,7 +11,7 @@ body {
 
 main {
   width: 48rem;
-  padding: 2rem;
+  padding: 8rem 2rem;
   margin: auto;
   max-width: 100vw;
 }
