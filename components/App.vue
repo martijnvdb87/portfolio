@@ -7,6 +7,7 @@
 <style>
 body {
   font-family: 'Inter', sans-serif;
+  @apply text-gray-600;
 }
 
 main {

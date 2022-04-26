@@ -1,5 +1,6 @@
 <template>
   <App>
+    <Avatar />
     <header>
       <h1>Martijn van den Bosch</h1>
       <p>Full Stack Developer</p>
@@ -123,10 +124,14 @@ import Vue from 'vue'
 import App from '~/components/App.vue'
 import Link from '~/components/Link.vue'
 import Socials from '~/components/Socials.vue'
+import Avatar from '~/components/Avatar.vue'
 
 export default Vue.extend({
+  head: {
+    title: "Home — Martijn van den Bosch",
+  },
   name: 'IndexPage',
-  components: { App, Link, Socials },
+  components: { App, Link, Socials, Avatar },
 })
 </script>
 
@@ -136,15 +141,15 @@ h1 {
 }
 
 header {
-  @apply mb-12;
+  @apply mb-16;
 }
 
 header p {
-  @apply text-gray-500 mb-8;
+  @apply mb-8;
 }
 
 h2 {
-  @apply text-sm;
+  @apply text-sm text-gray-900;
   font-weight: 600;
 }
 
