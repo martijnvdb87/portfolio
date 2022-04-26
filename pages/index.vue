@@ -32,7 +32,7 @@
         <p>
           I'm a self-thought full stack developer from the Netherlands. I
           started developing websites when I was just 12 years old and today,
-          more than 20 years later, I'm still loving every second of it.
+          more than 20 years later, I love every second of it.
         </p>
       </section>
 
@@ -104,7 +104,7 @@
         </header>
         <p>
           Besides watching series on Netflix and spending time with my wife, I
-          like to spend my time working on multiple personal projects.
+          like working on multiple <Link href="https://github.com/martijnvdb87?tab=repositories" target="_blank">personal projects</Link>.
         </p>
       </section>
 
