@@ -104,7 +104,12 @@
         </header>
         <p>
           Besides watching series on Netflix and spending time with my wife, I
-          like working on multiple <Link href="https://github.com/martijnvdb87?tab=repositories" target="_blank">personal projects</Link>.
+          like working on multiple
+          <Link
+            href="https://github.com/martijnvdb87?tab=repositories"
+            target="_blank"
+            >personal projects</Link
+          >.
         </p>
       </section>
 
