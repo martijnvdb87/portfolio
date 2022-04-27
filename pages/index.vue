@@ -33,7 +33,7 @@
         <p>
           I'm a self-thought full stack developer from the Netherlands. I
           started developing websites when I was just 12 years old and today,
-          more than 20 years later, I love every second of it.
+          more than 20 years later, I still love every second of it.
         </p>
       </section>
 
@@ -127,11 +127,11 @@ import Socials from '~/components/Socials.vue'
 import Avatar from '~/components/Avatar.vue'
 
 export default Vue.extend({
-  head: {
-    title: "Home — Martijn van den Bosch",
-  },
   name: 'IndexPage',
   components: { App, Link, Socials, Avatar },
+  head: {
+    title: 'Home — Martijn van den Bosch',
+  },
 })
 </script>
 
