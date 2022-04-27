@@ -32,7 +32,7 @@
         </header>
         <p>
           I'm a self-thought full stack developer from the Netherlands. I
-          started developing websites when I was just 12 years old and today,
+          started developing websites when I was 12 years old and today,
           more than 20 years later, I still love every second of it.
         </p>
       </section>
