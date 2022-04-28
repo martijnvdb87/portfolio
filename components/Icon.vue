@@ -104,8 +104,8 @@ export default Vue.extend({
       default: '2',
     },
     size: {
-      type: Number,
-      default: 5,
+      type: String,
+      default: '5',
     },
     color: {
       type: String,
