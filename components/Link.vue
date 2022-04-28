@@ -37,11 +37,11 @@ export default Vue.extend({
   name: 'Link',
   props: {
     href: {
-      target: String,
+      type: String,
       default: '#',
     },
     target: {
-      target: String,
+      type: String,
       default: '_self',
     },
   },
