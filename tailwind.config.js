@@ -1,11 +1,7 @@
 module.exports = {
   purge: {
     options: {
-      safelist: [
-        /^text-/,
-        /^w-/,
-        /^h-/,
-      ],
-    }
-  }
+      safelist: [/^text-/, /^w-/, /^h-/],
+    },
+  },
 }
