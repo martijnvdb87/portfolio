@@ -16,17 +16,9 @@ export default Vue.extend({
 
 <style scoped>
 .avatar {
-  position: relative;
-  @apply h-24 w-24 rounded-full bg-gray-200 mb-8;
+  @apply flex items-end justify-end h-24 w-24 rounded-full bg-gray-200 mb-8;
   background-image: url('https://avatars.githubusercontent.com/u/41451264');
   background-size: cover;
-}
-
-.status {
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  @apply flex items-center justify-center h-8 w-8 rounded-full bg-white;
 }
 
 svg {
