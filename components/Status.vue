@@ -55,12 +55,12 @@ export default Vue.extend({
           activity.start <= DateTime.now() && DateTime.now() < activity.end
       )
 
-      this.label = currentActivity.name
-      this.icon = currentActivity.icon
-
       this.hasStatus = !!currentActivity
 
-      if (this.hasStatus) {
+      if (currentActivity) {
+        this.label = currentActivity.name
+        this.icon = currentActivity.icon
+
         setTimeout(() => {
           const statusTextLabelElement = this.$el.querySelector(
             '.status__text label'
