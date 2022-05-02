@@ -88,13 +88,13 @@
     </template>
 
     <template v-else-if="type == 'bed'">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M3 7v11m0 -4h18m0 4v-8a2 2 0 0 0 -2 -2h-8v6" />
       <circle cx="7" cy="10" r="1" />
     </template>
 
     <template v-else-if="type == 'bike'">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <circle cx="5" cy="18" r="3" />
       <circle cx="19" cy="18" r="3" />
       <polyline points="12 19 12 15 9 12 14 8 16 11 19 11" />
@@ -102,7 +102,7 @@
     </template>
 
     <template v-else-if="type == 'device-tv'">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <rect x="3" y="7" width="18" height="13" rx="2" />
       <polyline points="16 3 12 7 8 3" />
     </template>

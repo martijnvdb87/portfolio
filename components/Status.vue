@@ -13,8 +13,8 @@
 
 <script>
 import Vue from 'vue'
+import { DateTime } from 'luxon'
 import Icon from './Icon.vue'
-import { DateTime } from 'luxon';
 
 export default Vue.extend({
   name: 'Status',
@@ -28,7 +28,7 @@ export default Vue.extend({
     }
   },
   mounted() {
-    this.getCurrentStatus();
+    this.getCurrentStatus()
   },
   beforeUnmount() {
     clearInterval(this.statusInterval)
@@ -37,25 +37,28 @@ export default Vue.extend({
     async getCurrentStatus() {
       this.statusInterval = setInterval(async () => {
         await this.updateStatus()
-      }, 60000);
-      
-      await this.updateStatus();
+      }, 60000)
+
+      await this.updateStatus()
     },
     async updateStatus() {
-      let activities = [];
+      let activities = []
 
-      activities.push(...await this.fetchGenericStatusData());
+      activities.push(...(await this.fetchGenericStatusData()))
 
-      activities = this.filterActivities(activities);
-      activities = this.addCurrentTimes(activities);
-      activities = this.orderActivities(activities);
+      activities = this.filterActivities(activities)
+      activities = this.addCurrentTimes(activities)
+      activities = this.orderActivities(activities)
 
-      const currentActivity = activities.find(activity => activity.start <= DateTime.now() && DateTime.now() < activity.end)
+      const currentActivity = activities.find(
+        (activity) =>
+          activity.start <= DateTime.now() && DateTime.now() < activity.end
+      )
 
-      this.label = currentActivity.name;
-      this.icon = currentActivity.icon;
+      this.label = currentActivity.name
+      this.icon = currentActivity.icon
 
-      this.hasStatus = currentActivity ? true : false;
+      this.hasStatus = !!currentActivity
 
       if (this.hasStatus) {
         setTimeout(() => {
@@ -71,73 +74,84 @@ export default Vue.extend({
     },
 
     async fetchGenericStatusData() {
-      const data = await fetch('/status.json');
-      const response = await data.json();
+      const data = await fetch('/status.json')
+      const response = await data.json()
 
-      return response;
+      return response
     },
 
     filterActivities(data) {
-      const dayIndex = new Date().getDay();
+      const isWeekend = ['Sat', 'Sun'].includes(DateTime.now().weekdayShort)
 
-      const isWeekend = ["Sat", "Sun"].includes(DateTime.now().weekdayShort);
+      return data.filter((entry) => {
+        if (entry.date === 'daily') return true
 
-      return data.filter(entry => {
-        if(entry.date == "daily") return true;
+        if (entry.date === DateTime.now().weekdayLong.toLowerCase()) return true
+        if (entry.date === DateTime.now().weekdayShort.toLowerCase())
+          return true
 
-        if(entry.date == DateTime.now().weekdayLong.toLowerCase()) return true;
-        if(entry.date == DateTime.now().weekdayShort.toLowerCase()) return true;
+        if (
+          Array.isArray(entry) &&
+          entry.date.includes(DateTime.now().weekdayLong.toLowerCase())
+        )
+          return true
+        if (
+          Array.isArray(entry) &&
+          entry.date.includes(DateTime.now().weekdayShort.toLowerCase())
+        )
+          return true
 
-        if(Array.isArray(entry) && entry.date.includes(DateTime.now().weekdayLong.toLowerCase())) return true;
-        if(Array.isArray(entry) && entry.date.includes(DateTime.now().weekdayShort.toLowerCase())) return true;
+        if (entry.date === 'weekend' && isWeekend) return true
+        if (entry.date === 'workday' && !isWeekend) return true
 
-        if(entry.date == "weekend" && isWeekend) return true;
-        if(entry.date == "workday" && !isWeekend) return true;
-      });
+        return false
+      })
     },
 
     addCurrentTimes(data) {
-      return data.map(entry => {
-        const start = DateTime.now().setZone('Europe/Amsterdam').set(this.getTimeUnits(entry.time));
-        const end = start.plus(this.getTimeUnits(entry.duration));
+      return data.map((entry) => {
+        const start = DateTime.now()
+          .setZone('Europe/Amsterdam')
+          .set(this.getTimeUnits(entry.time))
+        const end = start.plus(this.getTimeUnits(entry.duration))
 
-        entry.start = start.toUTC();
-        entry.end = end.toUTC();
+        entry.start = start.toUTC()
+        entry.end = end.toUTC()
 
-        return entry;
-      });
+        return entry
+      })
     },
 
     getTimeUnits(timeString) {
       const units = {
         hours: 0,
         minutes: 0,
-        seconds: 0
-      };
-
-      const parts = timeString.split(":");
-      if(parts.length > 0) {
-        units.hours = parseInt(parts[0]);
-        units.hours = !isNaN(units.hours) ? units.hours : 0;
-        units.hours = Math.min(23, Math.max(0, units.hours));
-      }
-      if(parts.length > 1) {
-        units.minutes = parseInt(parts[1]);
-        units.minutes = !isNaN(units.minutes) ? units.minutes : 0;
-        units.minutes = Math.min(59, Math.max(0, units.minutes));
-      }
-      if(parts.length > 2) {
-        units.seconds = parseInt(parts[2]);
-        units.seconds = !isNaN(units.seconds) ? units.seconds : 0;
-        units.seconds = Math.min(59, Math.max(0, units.seconds));
+        seconds: 0,
       }
 
-      return units;
+      const parts = timeString.split(':')
+      if (parts.length > 0) {
+        units.hours = parseInt(parts[0])
+        units.hours = !isNaN(units.hours) ? units.hours : 0
+        units.hours = Math.min(23, Math.max(0, units.hours))
+      }
+      if (parts.length > 1) {
+        units.minutes = parseInt(parts[1])
+        units.minutes = !isNaN(units.minutes) ? units.minutes : 0
+        units.minutes = Math.min(59, Math.max(0, units.minutes))
+      }
+      if (parts.length > 2) {
+        units.seconds = parseInt(parts[2])
+        units.seconds = !isNaN(units.seconds) ? units.seconds : 0
+        units.seconds = Math.min(59, Math.max(0, units.seconds))
+      }
+
+      return units
     },
 
     orderActivities(data) {
-      return data.sort((a, b) => Math.sign(a.priority - b.priority));
-    }
+      return data.sort((a, b) => Math.sign(a.priority - b.priority))
+    },
   },
 })
 </script>
