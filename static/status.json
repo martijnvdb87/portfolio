@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Sleeping",
+    "icon": "bed",
+    "date": "daily",
+    "time": "23:15",
+    "leeway": "00:30",
+    "duration": "08:00",
+    "priority": 20
+  },
+  {
+    "name": "Working at SkillsTown",
+    "icon": "building-skyscraper",
+    "date": "workday",
+    "time": "08:15",
+    "leeway": "00:30",
+    "duration": "08:30",
+    "priority": 80
+  },
+  {
+    "name": "Exercising",
+    "icon": "bike",
+    "date": "daily",
+    "time": "17:15",
+    "leeway": "00:30",
+    "duration": "00:45",
+    "priority": 100
+  },
+  {
+    "name": "Working on personal projects",
+    "icon": "code",
+    "date": "daily",
+    "time": "20:00",
+    "leeway": "01:00",
+    "duration": "01:30",
+    "priority": 160
+  },
+  {
+    "name": "Watching Netflix",
+    "icon": "device-tv",
+    "date": "daily",
+    "time": "21:30",
+    "leeway": "01:00",
+    "duration": "01:30",
+    "priority": 200
+  }
+]
