@@ -2,7 +2,7 @@
   <div v-if="hasStatus" class="status">
     <span class="status__label">
       <span class="status__icon">
-        <Icon :type="icon" stroke="1.75" />
+        {{ icon }}
       </span>
       <span class="status__text">
         <label>{{ label }}</label>
@@ -14,11 +14,9 @@
 <script>
 import Vue from 'vue'
 import { DateTime } from 'luxon'
-import Icon from './Icon.vue'
 
 export default Vue.extend({
   name: 'Status',
-  components: { Icon },
   data() {
     return {
       hasStatus: false,
@@ -187,6 +185,7 @@ label {
 }
 
 .status__icon {
-  @apply flex items-center justify-center h-8 w-8;
+  @apply flex items-center justify-center h-8 w-8 text-lg;
+  transform: translateY(-1px);
 }
 </style>
