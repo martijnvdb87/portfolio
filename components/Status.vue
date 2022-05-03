@@ -23,6 +23,7 @@ export default Vue.extend({
       icon: 'code',
       label: '',
       statusInterval: null,
+      genericStatusData: null,
     }
   },
   mounted() {
@@ -72,10 +73,12 @@ export default Vue.extend({
     },
 
     async fetchGenericStatusData() {
-      const data = await fetch('/status.json')
-      const response = await data.json()
+      if (!this.genericStatusData) {
+        const data = await fetch('/status.json')
+        this.genericStatusData = await data.json()
+      }
 
-      return response
+      return this.genericStatusData
     },
 
     filterActivities(data) {
