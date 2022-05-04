@@ -9,6 +9,15 @@
     "priority": 20
   },
   {
+    "name": "Sleeping",
+    "icon": "😴",
+    "date": "daily",
+    "time": "00:00",
+    "leeway": "00:00",
+    "duration": "07:15",
+    "priority": 20
+  },
+  {
     "name": "Working at SkillsTown",
     "icon": "🏢",
     "date": "workday",
