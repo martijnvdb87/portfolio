@@ -45,14 +45,14 @@ export default Vue.extend({
 
       activities.push(...(await this.fetchGenericStatusData()))
 
-      activities = this.filterActivities(activities)
-      activities = this.addCurrentTimes(activities)
       activities = this.orderActivities(activities)
+      const currentActivity = this.filterActivities(activities)
+      // activities = this.addCurrentTimes(activities)
 
-      const currentActivity = activities.find(
-        (activity) =>
-          activity.start <= DateTime.now() && DateTime.now() < activity.end
-      )
+      // const currentActivity = activities.find(
+      //   (activity) =>
+      //     activity.start <= DateTime.now() && DateTime.now() < activity.end
+      // )
 
       this.hasStatus = !!currentActivity
 
@@ -81,7 +81,106 @@ export default Vue.extend({
       return this.genericStatusData
     },
 
+    findStartOfLastWeekDay(day, currentDay = null) {
+      if (!currentDay) {
+        currentDay = DateTime.now().setZone('Europe/Amsterdam').startOf('day')
+      }
+
+      if (day === 'daily') {
+        return currentDay
+      } else if (day === 'weekend') {
+        let foundDay = currentDay
+
+        while (true) {
+          if (['Sat', 'Sun'].includes(foundDay.weekdayShort)) {
+            return foundDay
+          }
+
+          foundDay = foundDay.minus({ day: 1 })
+        }
+      } else if (day === 'workday') {
+        let foundDay = currentDay
+
+        while (true) {
+          if (!['Sat', 'Sun'].includes(foundDay.weekdayShort)) {
+            return foundDay
+          }
+
+          foundDay = foundDay.minus({ day: 1 })
+        }
+      } else if (
+        [
+          'mon',
+          'tue',
+          'wed',
+          'thu',
+          'fri',
+          'sat',
+          'sun',
+          'monday',
+          'tuesday',
+          'wednesday',
+          'thursday',
+          'friday',
+          'saturday',
+          'sunday',
+        ].includes(day.toLowerCase())
+      ) {
+        let foundDay = currentDay
+
+        while (true) {
+          if (
+            day.toLowerCase() === foundDay.weekdayShort.toLowerCase() ||
+            day.toLowerCase() === foundDay.weekdayLong.toLowerCase()
+          ) {
+            return foundDay
+          }
+
+          foundDay = foundDay.minus({ day: 1 })
+        }
+      }
+
+      return null
+    },
+
     filterActivities(data) {
+      const now = DateTime.now()
+
+      return data.find((entry) => {
+        const startDay = this.findStartOfLastWeekDay(entry.date)
+
+        const start = startDay.set(this.getTimeUnits(entry.time))
+
+        const end = start.plus(this.getTimeUnits(entry.duration))
+
+        if (start <= now && now < end) {
+          return true
+        }
+
+        const previousEntryStartDay = this.findStartOfLastWeekDay(
+          entry.date,
+          startDay.minus({ seconds: 1 })
+        )
+
+        if (previousEntryStartDay) {
+          const previousEntryStart = previousEntryStartDay.set(
+            this.getTimeUnits(entry.time)
+          )
+
+          const previousEntryEnd = previousEntryStart.plus(
+            this.getTimeUnits(entry.duration)
+          )
+
+          if (previousEntryStart <= now && now < previousEntryEnd) {
+            return true
+          }
+        }
+
+        return false
+      })
+    },
+
+    filterActivitiesOLD(data) {
       const isWeekend = ['Sat', 'Sun'].includes(DateTime.now().weekdayShort)
 
       return data.filter((entry) => {
