@@ -14,6 +14,7 @@
 <script>
 import Vue from 'vue'
 import { DateTime } from 'luxon'
+import seedrandom from 'seedrandom'
 
 export default Vue.extend({
   name: 'Status',
@@ -33,6 +34,9 @@ export default Vue.extend({
     clearInterval(this.statusInterval)
   },
   methods: {
+    seededRandom(seed, max, min = 0) {
+      return Math.round((seedrandom(seed)() * (max - min)) + min);
+    },
     async getCurrentStatus() {
       this.statusInterval = setInterval(async () => {
         await this.updateStatus()
@@ -47,12 +51,6 @@ export default Vue.extend({
 
       activities = this.orderActivities(activities)
       const currentActivity = this.filterActivities(activities)
-      // activities = this.addCurrentTimes(activities)
-
-      // const currentActivity = activities.find(
-      //   (activity) =>
-      //     activity.start <= DateTime.now() && DateTime.now() < activity.end
-      // )
 
       this.hasStatus = !!currentActivity
 
@@ -143,32 +141,60 @@ export default Vue.extend({
       return null
     },
 
+    parseTime(time, seed) {
+      if(Array.isArray(time) && time.length > 1) {
+        const timeFirstUnits = this.getTimeUnits(time[0])
+        const totalTimeFirstSeconds = (3600 * (timeFirstUnits.hours ?? 0)) + (60 * (timeFirstUnits.minutes ?? 0)) + ((timeFirstUnits.seconds ?? 0))
+
+        const timeSecondUnits = this.getTimeUnits(time[1])
+        const totalTimeSecondSeconds = (3600 * (timeSecondUnits.hours ?? 0)) + (60 * (timeSecondUnits.minutes ?? 0)) + ((timeSecondUnits.seconds ?? 0))
+        const difference = Math.max(totalTimeFirstSeconds, totalTimeSecondSeconds) - Math.min(totalTimeFirstSeconds, totalTimeSecondSeconds);
+
+        let startTime = totalTimeFirstSeconds < totalTimeSecondSeconds ? time[0] : time[1];            
+        const {hour, minute, second} = DateTime.now().set(this.getTimeUnits(startTime)).plus({seconds: this.seededRandom(seed, difference)}).toObject();
+        return `${hour < 10 ? "0" : ""}${hour}:${minute < 10 ? "0" : ""}${minute}:${second < 10 ? "0" : ""}${second}`;
+
+      } else if(Array.isArray(time) && time.length == 1) {
+        return time[0];
+
+      } else if(typeof time === 'string') {
+        return time
+      }
+
+      return "00:00:00";
+    },
+
     filterActivities(data) {
-      const now = DateTime.now()
-
+      const now = DateTime.now().setZone('Europe/Amsterdam')
+      const currentDaySeed = now.startOf('day').toUnixInteger();
+      
       return data.find((entry) => {
-        const startDay = this.findStartOfLastWeekDay(entry.date)
+        const seed = currentDaySeed + JSON.stringify(entry);
 
-        const start = startDay.set(this.getTimeUnits(entry.time))
+        const date = entry.date;
+        const time = this.parseTime(entry.time, seed);
+        const duration = this.parseTime(entry.duration, seed);
 
-        const end = start.plus(this.getTimeUnits(entry.duration))
+        const startDay = this.findStartOfLastWeekDay(date)
+        const start = startDay.set(this.getTimeUnits(time))
+        const end = start.plus(this.getTimeUnits(duration))
 
         if (start <= now && now < end) {
           return true
         }
 
         const previousEntryStartDay = this.findStartOfLastWeekDay(
-          entry.date,
+          date,
           startDay.minus({ seconds: 1 })
         )
 
         if (previousEntryStartDay) {
           const previousEntryStart = previousEntryStartDay.set(
-            this.getTimeUnits(entry.time)
+            this.getTimeUnits(time)
           )
 
           const previousEntryEnd = previousEntryStart.plus(
-            this.getTimeUnits(entry.duration)
+            this.getTimeUnits(duration)
           )
 
           if (previousEntryStart <= now && now < previousEntryEnd) {
@@ -177,48 +203,6 @@ export default Vue.extend({
         }
 
         return false
-      })
-    },
-
-    filterActivitiesOLD(data) {
-      const isWeekend = ['Sat', 'Sun'].includes(DateTime.now().weekdayShort)
-
-      return data.filter((entry) => {
-        if (entry.date === 'daily') return true
-
-        if (entry.date === DateTime.now().weekdayLong.toLowerCase()) return true
-        if (entry.date === DateTime.now().weekdayShort.toLowerCase())
-          return true
-
-        if (
-          Array.isArray(entry) &&
-          entry.date.includes(DateTime.now().weekdayLong.toLowerCase())
-        )
-          return true
-        if (
-          Array.isArray(entry) &&
-          entry.date.includes(DateTime.now().weekdayShort.toLowerCase())
-        )
-          return true
-
-        if (entry.date === 'weekend' && isWeekend) return true
-        if (entry.date === 'workday' && !isWeekend) return true
-
-        return false
-      })
-    },
-
-    addCurrentTimes(data) {
-      return data.map((entry) => {
-        const start = DateTime.now()
-          .setZone('Europe/Amsterdam')
-          .set(this.getTimeUnits(entry.time))
-        const end = start.plus(this.getTimeUnits(entry.duration))
-
-        entry.start = start.toUTC()
-        entry.end = end.toUTC()
-
-        return entry
       })
     },
 
