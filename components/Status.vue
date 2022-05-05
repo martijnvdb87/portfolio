@@ -35,7 +35,7 @@ export default Vue.extend({
   },
   methods: {
     seededRandom(seed, max, min = 0) {
-      return Math.round((seedrandom(seed)() * (max - min)) + min);
+      return Math.round(seedrandom(seed)() * (max - min) + min)
     },
     async getCurrentStatus() {
       this.statusInterval = setInterval(async () => {
@@ -142,38 +142,50 @@ export default Vue.extend({
     },
 
     parseTime(time, seed) {
-      if(Array.isArray(time) && time.length > 1) {
+      if (Array.isArray(time) && time.length > 1) {
         const timeFirstUnits = this.getTimeUnits(time[0])
-        const totalTimeFirstSeconds = (3600 * (timeFirstUnits.hours ?? 0)) + (60 * (timeFirstUnits.minutes ?? 0)) + ((timeFirstUnits.seconds ?? 0))
+        const totalTimeFirstSeconds =
+          3600 * (timeFirstUnits.hours ?? 0) +
+          60 * (timeFirstUnits.minutes ?? 0) +
+          (timeFirstUnits.seconds ?? 0)
 
         const timeSecondUnits = this.getTimeUnits(time[1])
-        const totalTimeSecondSeconds = (3600 * (timeSecondUnits.hours ?? 0)) + (60 * (timeSecondUnits.minutes ?? 0)) + ((timeSecondUnits.seconds ?? 0))
-        const difference = Math.max(totalTimeFirstSeconds, totalTimeSecondSeconds) - Math.min(totalTimeFirstSeconds, totalTimeSecondSeconds);
+        const totalTimeSecondSeconds =
+          3600 * (timeSecondUnits.hours ?? 0) +
+          60 * (timeSecondUnits.minutes ?? 0) +
+          (timeSecondUnits.seconds ?? 0)
+        const difference =
+          Math.max(totalTimeFirstSeconds, totalTimeSecondSeconds) -
+          Math.min(totalTimeFirstSeconds, totalTimeSecondSeconds)
 
-        let startTime = totalTimeFirstSeconds < totalTimeSecondSeconds ? time[0] : time[1];            
-        const {hour, minute, second} = DateTime.now().set(this.getTimeUnits(startTime)).plus({seconds: this.seededRandom(seed, difference)}).toObject();
-        return `${hour < 10 ? "0" : ""}${hour}:${minute < 10 ? "0" : ""}${minute}:${second < 10 ? "0" : ""}${second}`;
-
-      } else if(Array.isArray(time) && time.length == 1) {
-        return time[0];
-
-      } else if(typeof time === 'string') {
+        const startTime =
+          totalTimeFirstSeconds < totalTimeSecondSeconds ? time[0] : time[1]
+        const { hour, minute, second } = DateTime.now()
+          .set(this.getTimeUnits(startTime))
+          .plus({ seconds: this.seededRandom(seed, difference) })
+          .toObject()
+        return `${hour < 10 ? '0' : ''}${hour}:${
+          minute < 10 ? '0' : ''
+        }${minute}:${second < 10 ? '0' : ''}${second}`
+      } else if (Array.isArray(time) && time.length === 1) {
+        return time[0]
+      } else if (typeof time === 'string') {
         return time
       }
 
-      return "00:00:00";
+      return '00:00:00'
     },
 
     filterActivities(data) {
       const now = DateTime.now().setZone('Europe/Amsterdam')
-      const currentDaySeed = now.startOf('day').toUnixInteger();
-      
-      return data.find((entry) => {
-        const seed = currentDaySeed + JSON.stringify(entry);
+      const currentDaySeed = now.startOf('day').toUnixInteger()
 
-        const date = entry.date;
-        const time = this.parseTime(entry.time, seed);
-        const duration = this.parseTime(entry.duration, seed);
+      return data.find((entry) => {
+        const seed = currentDaySeed + JSON.stringify(entry)
+
+        const date = entry.date
+        const time = this.parseTime(entry.time, seed)
+        const duration = this.parseTime(entry.duration, seed)
 
         const startDay = this.findStartOfLastWeekDay(date)
         const start = startDay.set(this.getTimeUnits(time))
