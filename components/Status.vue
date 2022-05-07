@@ -1,5 +1,5 @@
 <template>
-  <div v-if="hasStatus" class="status">
+  <div :class="['status', hasStatus ? 'status--active' : '']">
     <span class="status__label">
       <span class="status__icon">
         {{ icon }}
@@ -255,7 +255,11 @@ export default Vue.extend({
 <style scoped>
 .status {
   --status-width: 200px;
-  @apply relative flex items-center justify-center h-8 w-8 rounded-full font-semibold;
+  @apply relative flex items-center justify-center h-8 w-8 rounded-full font-semibold ease-in-out duration-300 pointer-events-none scale-0 transform-gpu;
+}
+
+.status.status--active {
+  @apply pointer-events-auto scale-100;
 }
 
 .status__label {
