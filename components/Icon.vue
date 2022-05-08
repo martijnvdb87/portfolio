@@ -106,6 +106,19 @@
       <rect x="3" y="7" width="18" height="13" rx="2" />
       <polyline points="16 3 12 7 8 3" />
     </template>
+
+    <template v-else-if="type == 'menu'">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <line x1="4" y1="6" x2="20" y2="6"></line>
+      <line x1="4" y1="12" x2="20" y2="12"></line>
+      <line x1="4" y1="18" x2="20" y2="18"></line>
+    </template>
+
+    <template v-else-if="type == 'search'">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <circle cx="10" cy="10" r="7"></circle>
+      <line x1="21" y1="21" x2="15" y2="15"></line>
+    </template>
   </svg>
 </template>
 
