@@ -1,10 +1,10 @@
 <template>
-  <a :href="href" :target="target" rel="noreferrer noopener">
-    <span class="link-container">
-      <span class="link-placholder" aria-hidden="true">
+  <a class="link" :href="href" :target="target" rel="noreferrer noopener">
+    <span class="link__container">
+      <span class="link__placholder" aria-hidden="true">
         <slot></slot>
       </span>
-      <span class="link-visible">
+      <span class="link__visible">
         <slot></slot>
       </span>
     </span>
@@ -48,49 +48,51 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
-a {
+<style lang="scss">
+.link {
   display: inline-flex;
   align-items: center;
   gap: 0.125em;
   line-height: 1.3em;
   border-bottom: 1px solid #666;
-}
 
-.link-container {
-  position: relative;
-}
+  &__container {
+    position: relative;
+  }
 
-.link-placholder {
-  opacity: 0;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none;
-}
+  &__placholder {
+    opacity: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
 
-.link-visible {
-  position: absolute;
-  top: 0px;
-  left: -1em;
-  right: -1em;
-  text-align: center;
-  pointer-events: none;
-  transition: ease all 200ms;
-}
+  &__visible {
+    position: absolute;
+    top: 0px;
+    left: -1em;
+    right: -1em;
+    text-align: center;
+    pointer-events: none;
+    transition: ease all 200ms;
+  }
 
-a:hover .link-visible {
-  font-weight: 700;
-  letter-spacing: -0.025em;
-}
+  &:hover {
+    .link__visible {
+      font-weight: 700;
+      letter-spacing: -0.025em;
+    }
+  }
 
-svg {
-  @apply inline-block;
-  width: 1rem;
-  height: 1rem;
-  stroke-width: 1.5px;
+  svg {
+    @apply inline-block;
+    width: 1rem;
+    height: 1rem;
+    stroke-width: 1.5px;
+  }
 }
 </style>
