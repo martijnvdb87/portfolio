@@ -38,7 +38,8 @@
             target="_blank"
             >LAMP stack</Link
           >
-          for one of our two online learning platforms. The other one is using the .NET framework. 
+          for one of our two online learning platforms. The other one is using
+          the .NET framework.
         </p>
       </section>
 
