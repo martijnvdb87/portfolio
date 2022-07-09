@@ -82,7 +82,7 @@ export default Vue.extend({
 
 <style scoped>
 h1 {
-  @apply text-xl font-semibold text-gray-900;
+  @apply text-2xl font-semibold text-gray-900;
 }
 
 header {
@@ -91,15 +91,19 @@ header {
 
 header p {
   @apply mb-8;
+  font-size: 1.05em;
 }
 
 h2 {
   @apply text-sm text-gray-900;
   font-weight: 600;
+  font-size: 0.95em;
 }
 
 article p {
   @apply mb-14 text-base;
+  line-height: 1.6;
+  font-size: 1.05em;
 }
 
 section header {

@@ -3,5 +3,5 @@ module.exports = {
     options: {
       safelist: [/^text-/, /^w-/, /^h-/],
     },
-  },
+  }
 }

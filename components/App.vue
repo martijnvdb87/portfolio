@@ -8,6 +8,8 @@
 body {
   font-family: 'Inter', sans-serif;
   @apply text-gray-600;
+  color: #555;
+  font-weight: 300;
 }
 
 main {

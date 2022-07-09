@@ -150,11 +150,11 @@ export default Vue.extend({
     },
     stroke: {
       type: String,
-      default: '2',
+      default: '1.5',
     },
     size: {
       type: String,
-      default: '5',
+      default: '6',
     },
     color: {
       type: String,

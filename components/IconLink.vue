@@ -33,7 +33,7 @@ export default Vue.extend({
 .icon-link {
   display: inline-flex;
   border-radius: 50%;
-  @apply w-7 h-7 grid place-content-center;
+  @apply w-10 h-10 grid place-content-center;
 
   &__description {
     border: 0;
@@ -43,19 +43,8 @@ export default Vue.extend({
     height: 1px;
     width: 1px;
     overflow: hidden;
-    clip: rect(
-      1px 1px 1px 1px
-    ); /* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
-    clip: rect(
-      1px,
-      1px,
-      1px,
-      1px
-    ); /*maybe deprecated but we need to support legacy browsers */
-    clip-path: inset(
-      50%
-    ); /*modern browsers, clip-path works inwards from each corner*/
-    white-space: nowrap; /* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 }
 </style>
