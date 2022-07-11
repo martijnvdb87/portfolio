@@ -33,7 +33,7 @@ export default Vue.extend({
 .icon-link {
   display: inline-flex;
   border-radius: 50%;
-  @apply w-10 h-10 grid place-content-center;
+  @apply w-10 h-10 grid place-content-center duration-200;
 
   &__description {
     border: 0;
@@ -45,6 +45,10 @@ export default Vue.extend({
     overflow: hidden;
     clip-path: inset(50%);
     white-space: nowrap;
+  }
+
+  &:hover {
+    transform: scale(1.2);
   }
 }
 </style>

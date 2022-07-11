@@ -55,6 +55,7 @@ export default Vue.extend({
   gap: 0.125em;
   line-height: 1.3em;
   border-bottom: 1px solid #666;
+  white-space: nowrap;
 
   &__container {
     position: relative;
@@ -74,10 +75,10 @@ export default Vue.extend({
   &__visible {
     position: absolute;
     top: 0px;
-    left: -1em;
-    right: -1em;
+    left: 50%;
     text-align: center;
     pointer-events: none;
+    transform: translateX(-50%);
     transition: ease all 200ms;
   }
 

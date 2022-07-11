@@ -9,7 +9,7 @@
     <article>
       <section>
         <header>
-          <Icon type="id" size="4" color="gray-900" />
+          <Icon type="id" size="4" color="gray-900" stroke-width="2" />
           <h2>Introduction</h2>
         </header>
         <p>
@@ -21,7 +21,12 @@
 
       <section>
         <header>
-          <Icon type="building-skyscraper" size="4" color="gray-900" />
+          <Icon
+            type="building-skyscraper"
+            size="4"
+            color="gray-900"
+            stroke-width="2"
+          />
           <h2>Work</h2>
         </header>
         <p>
@@ -32,20 +37,22 @@
           <Link href="https://www.saltagroup.com/" target="_blank"
             >Salta Group</Link
           >
-          (formerly known as the NCOI Group). We are using the
+          (formerly known as the NCOI Group). We are improving and maintaining
+          two online learning platforms. The first one uses the
           <Link
             href="https://en.wikipedia.org/wiki/LAMP_(software_bundle)"
             target="_blank"
             >LAMP stack</Link
           >
-          for one of our two online learning platforms. The other one is using
-          the .NET framework.
+          (PHP & MySQL) and a custom in-house built Javascript framework (some
+          parts use React). The second platform is using .NET for the backend
+          and Vue for the frontend using Typescript.
         </p>
       </section>
 
       <section>
         <header>
-          <Icon type="sofa" size="4" color="gray-900" />
+          <Icon type="sofa" size="4" color="gray-900" stroke-width="2" />
           <h2>Free time</h2>
         </header>
         <p>
